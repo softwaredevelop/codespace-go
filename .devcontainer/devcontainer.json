@@ -53,8 +53,8 @@
 		"--env-file=.devcontainer/devcontainer.env",
 		"--init",
 		"--privileged",
-		"--security-opt=seccomp=unconfined",
-		"--name=codespace-golang"
+		"--security-opt=seccomp=unconfined"
+		// "--name=codespace-golang"
 		// "--userns=keep-id",
 	],
 	"containerUser": "codespace",
