@@ -1,22 +1,35 @@
-ARG VARIANT=latest
-FROM docker.io/library/ubuntu:$VARIANT
+ARG VARIANT=alpine
+FROM docker.io/library/golang:$VARIANT
+
+RUN \
+    apk update; \
+    apk add --no-cache sudo; \
+    go install -v golang.org/x/tools/gopls@latest; \
+    go install -v github.com/ramya-rao-a/go-outline@latest; \
+    rm -rf /var/cache/apk/*
+
+SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
+RUN \
+    apk update; \
+    apk add --no-cache curl; \
+    curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b "$(go env GOPATH)"/bin; \
+    rm -rf /var/cache/apk/*
 
 ARG USERNAME=codespace
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
-ENV DEBIAN_FRONTEND=noninteractive
-
 COPY library-scripts/* /tmp/scripts/
 
 RUN \
-    bash /tmp/scripts/common.sh "true" "debian"; \
-    bash /tmp/scripts/setup-user.sh "${USERNAME}" "${USER_UID}" "${USER_GID}" "debian"; \
-    bash /tmp/scripts/hadolint.sh "2.10.0" "debian"; \
-    bash /tmp/scripts/shfmt.sh "3.5.1" "debian"; \
-    bash /tmp/scripts/shellcheck.sh "0.8.0" "debian"; \
-    bash /tmp/scripts/editorconfig.sh "2.6.0" "debian"; \
-    bash /tmp/scripts/trivy.sh "0.34.0" "debian"; \
-    apt-get autoremove; \
-    apt-get clean; \
-    rm -rf /var/lib/apt/lists/* /tmp/scripts
+    apk update; \
+    apk add --no-cache --latest \
+    bash; \
+    bash /tmp/scripts/common-alpine.sh "true"; \
+    bash /tmp/scripts/setup-user-alpine.sh "${USERNAME}" "${USER_UID}" "${USER_GID}"; \
+    bash /tmp/scripts/hadolint-alpine.sh "2.12.0"; \
+    bash /tmp/scripts/shfmt-alpine.sh "3.6.0"; \
+    bash /tmp/scripts/shellcheck-alpine.sh "0.9.0"; \
+    bash /tmp/scripts/editorconfig-alpine.sh "2.6.0"; \
+    bash /tmp/scripts/trivy-alpine.sh "0.36.0"; \
+    rm -rf /var/cache/apk/* /tmp/scripts
