@@ -1,0 +1,142 @@
+---
+run:
+  timeout: 5m
+  allow-parallel-runners: true
+
+linters:
+  disable-all: true
+  enable:
+    - asciicheck
+    - bidichk
+    - deadcode
+    - dogsled
+    - dupl
+    - errcheck
+    - funlen
+    - goconst
+    - gocritic
+    - gocyclo
+    - gofmt
+    - gofumpt
+    - goimports
+    # - gomnd
+    - gosec
+    - gosimple
+    - govet
+    # - grouper
+    - ineffassign
+    - lll
+    - misspell
+    # - paralleltest
+    - staticcheck
+    - structcheck
+    - stylecheck
+    - thelper
+    - typecheck
+    - unconvert
+    - unused
+    - varcheck
+    # - varnamelen
+
+linters-settings:
+  dogsled:
+    max-blank-identifiers: 3
+  dupl:
+    threshold: 100
+  errcheck:
+    check-type-assertions: true
+    check-blank: true
+    disable-default-exclusions: true
+  funlen:
+    lines: -1
+    statements: -1
+  goconst:
+    ignore-tests: true
+  gocritic:
+    disabled-checks:
+      - assignOp
+      - singleCaseSwitch
+      - switchTrue
+    settings:
+      captLocal:
+        paramsOnly: false
+      elseif:
+        skipBalanced: false
+      rangeValCopy:
+        skipTestFuncs: false
+      tooManyResultsChecker:
+        maxResults: 10
+      truncateCmp:
+        skipArchDependent: false
+      underef:
+        skipRecvDeref: false
+      unnamedResult:
+        checkExported: true
+  # gomnd:
+  #   checks:
+  #     - argument
+  #     - case
+  #     - condition
+  #     - operation
+  #     - return
+  #     - assign
+  gosec:
+    includes:
+      - G101
+      - G102
+      - G103
+      - G104
+      - G106
+      - G107
+      - G108
+      - G109
+      - G110
+      - G201
+      - G202
+      - G203
+      - G204
+      - G301
+      - G302
+      - G303
+      - G304
+      - G305
+      - G306
+      - G307
+      - G401
+      - G402
+      - G403
+      - G404
+      - G501
+      - G502
+      - G503
+      - G504
+      - G505
+      - G601
+    severity: medium
+    confidence: medium
+  gosimple:
+    go: "1.17"
+    checks: ["all"]
+  govet:
+    enable-all: true
+    disable:
+      - shadow
+  # grouper:
+  #   const-require-single-const: true
+  #   const-require-grouping: true
+  #   import-require-single-import: true
+  #   import-require-grouping: true
+  #   type-require-single-type: true
+  #   type-require-grouping: true
+  #   var-require-single-var: true
+  #   var-require-grouping: true
+  misspell:
+    locale: US
+  staticcheck:
+    go: "1.17"
+  stylecheck:
+    go: "1.17"
+  # varnamelen:
+  #   min-name-length: 1
+  #   check-receiver: true
+  #   check-return: true
