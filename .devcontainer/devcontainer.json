@@ -1,11 +1,11 @@
 {
-	"name": "Codespace Default",
+	"name": "Codespace Go",
 	"build": {
 		"dockerfile": "Dockerfile",
 		"args": {
 			"USER_UID": "1000",
 			"USERNAME": "codespace",
-			"VARIANT": "latest"
+			"VARIANT": "alpine"
 			// "VARIANT": "stable-slim"
 		}
 	},
@@ -14,8 +14,21 @@
 	"customizations": {
 	// Configure properties specific to VS Code.
 		"vscode": {
-			"settings": {},
-			"extensions": []
+			"settings": {
+				"[go]": {
+					"editor.defaultFormatter": "golang.go"
+				},
+				"go.lintFlags": [
+					"--fast"
+				],
+				"go.lintTool": "golangci-lint",
+				"gopls": {
+					"formatting.gofumpt": true
+				}
+			},
+			"extensions": [
+				"golang.go"
+			]
 			// "devPort": {}
 		}
 	},
@@ -40,8 +53,8 @@
 		"--env-file=.devcontainer/devcontainer.env",
 		"--init",
 		"--privileged",
-		"--security-opt=seccomp=unconfined"
-		// "--name=codespace-default",
+		"--security-opt=seccomp=unconfined",
+		"--name=codespace-golang"
 		// "--userns=keep-id",
 	],
 	"containerUser": "codespace",
