@@ -49,10 +49,10 @@ jobs:
       - name: Golang lint
         uses: golangci/golangci-lint-action@v3.2.0
         with:
+          version: latest
           args: ./...
           github-token: ${{ secrets.GITHUB_TOKEN }}
           only-new-issues: true
-          skip-build-cache: true
-          skip-go-installation: true
+          skip-cache: false
           skip-pkg-cache: true
-          version: latest
+          skip-build-cache: true
