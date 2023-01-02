@@ -41,14 +41,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Go ${{ matrix.go }}
-        uses: actions/setup-go@v3
-        with:
-          go-version: ${{ matrix.go }}
-
       - name: Reviewdog Golangci-lint
         uses: reviewdog/action-golangci-lint@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          golangci_lint_flags: --verbose --timeout=5s ./...
+          golangci_lint_flags: --verbose --timeout=5s ./go/...
           go_version: ${{ matrix.go }}
