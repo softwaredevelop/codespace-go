@@ -51,5 +51,14 @@ jobs:
           go install golang.org/x/lint/golint@latest
 
       - name: Run golint
+        id: golint
         run: |
           golint -set_exit_status ./...
+        continue-on-error: true
+
+      - name: Check for errors
+        if: steps.golint.outputs.errors != ""
+        run: |
+          echo "golint found errors"
+          echo "golint errors: ${{ steps.golint.outputs.errors }}"
+          exit 1
