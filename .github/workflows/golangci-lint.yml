@@ -55,4 +55,3 @@ jobs:
           only-new-issues: true
           skip-pkg-cache: true
           skip-build-cache: true
-          working-directory: .
