@@ -1,5 +1,5 @@
 ---
-name: Golangci-lint
+name: Reviewdog Golangci-lint
 
 on:
   push:
@@ -28,7 +28,7 @@ jobs:
           cancel_others: true
           concurrent_skipping: never
 
-  golangci:
+  golangci-lint:
     strategy:
       matrix:
         go: ["1.17", "1.18", "1.19"]
@@ -46,12 +46,9 @@ jobs:
         with:
           go-version: ${{ matrix.go }}
 
-      - name: Golang lint
-        uses: golangci/golangci-lint-action@v3
+      - name: Reviewdog Golangci-lint
+        uses: reviewdog/action-golangci-lint@v2
         with:
-          version: latest
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          args: --verbose --timeout=5s ./...
-          only-new-issues: true
-          skip-pkg-cache: true
-          skip-build-cache: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          golangci_lint_flags: --verbose --timeout=5s ./...
+          go_version: ${{ matrix.go }}
