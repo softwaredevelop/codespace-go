@@ -53,3 +53,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           args: --verbose --timeout=5s ./...
           only-new-issues: true
+          skip-pkg-cache: true
+          skip-build-cache: true
+          skip-go-installation: true
+          working-directory: .
