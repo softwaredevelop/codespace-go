@@ -51,3 +51,5 @@ jobs:
         with:
           version: latest
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          args: ./...
+          only-new-issues: true
