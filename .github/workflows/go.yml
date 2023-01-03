@@ -46,11 +46,12 @@ jobs:
         with:
           go-version: ${{ matrix.go }}
 
-      - name: Install golint
+      - name: Install golint & fgt
         run: |
           go install golang.org/x/lint/golint@latest
+          go install github.com/GeertJohan/fgt@latest
 
       - name: Run golint
         id: golint
         run: |
-          [[ -n $(golint -set_exit_status ./...) ]]
+          fgt golint -set_exit_status ./...
