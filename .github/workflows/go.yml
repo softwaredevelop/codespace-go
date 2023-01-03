@@ -54,3 +54,10 @@ jobs:
         id: golint
         run: |
           golint -set_exit_status ./...
+        continue-on-error: true
+
+      - name: Check golint results
+        if: steps.golint.outcome == 'failure'
+        run: |
+          echo "golint failed"
+          exit 1
