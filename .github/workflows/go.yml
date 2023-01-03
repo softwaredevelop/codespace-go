@@ -51,6 +51,33 @@ jobs:
           go install golang.org/x/lint/golint@latest
 
       - name: Run golint
-        id: golint
         run: |
           golint -set_exit_status ./...
+
+  golangci-lint:
+    strategy:
+      matrix:
+        go: ["1.17", "1.18", "1.19"]
+        os: [ubuntu-latest, windows-latest]
+    name: Run golangci-lint
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Go ${{ matrix.go }}
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ matrix.go }}
+
+      - name: Install golangci-lint
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.50.1
+        shell: bash
+
+      - name: Run golangci-lint
+        run: |
+          golangci-lint run --verbose ./...
+        shell: bash
