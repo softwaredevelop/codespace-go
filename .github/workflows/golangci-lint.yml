@@ -52,5 +52,4 @@ jobs:
           version: latest
           github-token: ${{ secrets.GITHUB_TOKEN }}
           args: --verbose --timeout=5s ./...
-          only-new-issues: true
           working-directory: .
